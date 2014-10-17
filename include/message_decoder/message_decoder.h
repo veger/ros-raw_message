@@ -28,21 +28,31 @@ namespace message_decoder
 /**
  * Class to handle decoding ROS topic messages without having prior knowledge about the actual type.
  *
- * Subscribe to any topic using the ShapeShifter message type and feed the received messages into this class
+ * Subscribe to any topic using the ShapeShifter message type and provide the messages to the {@link #startDecodingMessage()) function.
+ * Next the {@link decodeNextField()} function can be used to iterate over the fields and obtain their information, until it returns false.
  */
 class MessageDecoder
 {
 public:
-  /** Decode the given message by printing all of its field separately */
-  void decodeMessage(boost::shared_ptr<topic_tools::ShapeShifter const> const &msg);
-
-private:
+  /** Start to decode the given message */
+  void startDecodingMessage(boost::shared_ptr<topic_tools::ShapeShifter const> const &msg);
 
   /**
    * Decode the next field
    * @return false if the decoder is finished
    */
-  bool decodeField();
+  bool decodeNextField();
+
+  /** Display the value of the current field */
+  void outputField();
+
+  /** @return the name of the current field */
+  std::string const& getFieldName();
+
+  /** @return the type of the current field */
+  std::string const& getFieldType();
+
+private:
 
   std::stringstream messageDescriptor;
 
@@ -51,5 +61,17 @@ private:
 
   /** Binary data blob of the message that is being decoded */
   uint8_t messageData[256];
+
+  /** Type of current field */
+  std::string fieldType;
+
+  /** Name of current field */
+  std::string fieldName;
+
+  /** Value of the current field assuming it is a string, otherwise undefined */
+  std::string fieldValueString;
+
+  /** Value of the current field assuming it is integer based, otherwise undefined */
+  uint64_t fieldValueInt;
 };
 }
