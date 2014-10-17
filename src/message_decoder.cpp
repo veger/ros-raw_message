@@ -23,6 +23,12 @@ using namespace std;
 namespace message_decoder
 {
 
+MessageDecoder::MessageDecoder() :
+    fieldType(UNKNOWN), fieldValueInt(0), messagePosition(0)
+{
+
+}
+
 void MessageDecoder::startDecodingMessage(boost::shared_ptr<topic_tools::ShapeShifter const> const &msg)
 {
   ROS_INFO("Data type: %s, size %u", msg->getDataType().c_str(), msg->size());
@@ -48,41 +54,48 @@ bool MessageDecoder::decodeNextField()
   }
 
   // Each line consists of a field type and name
+  string fieldTypeStr;
   stringstream ss2(line);
-  ss2 >> fieldType;
+  ss2 >> fieldTypeStr;
   ss2 >> fieldName;
 
-  if (fieldType == "string")
+  if (fieldTypeStr == "string")
   {
+    fieldType = String;
     // First word is the text length, followed by the text
     uint32_t textLength = ((int32_t *)(messageData + messagePosition))[0];
     messagePosition += 4;
     fieldValueString.assign(messageData + messagePosition, messageData + messagePosition + textLength);
     messagePosition += textLength;
   }
-  else if (fieldType == "int64")
+  else if (fieldTypeStr == "int64")
   {
+    fieldType = Int64;
     fieldValueInt = ((int64_t *)(messageData + messagePosition))[0];
     messagePosition += 8;
   }
-  else if (fieldType == "int32")
+  else if (fieldTypeStr == "int32")
   {
+    fieldType = Int32;
     fieldValueInt = ((int32_t *)(messageData + messagePosition))[0];
     messagePosition += 4;
   }
-  else if (fieldType == "int16")
+  else if (fieldTypeStr == "int16")
   {
+    fieldType = Int16;
     fieldValueInt = ((int16_t *)(messageData + messagePosition))[0];
     messagePosition += 2;
   }
-  else if (fieldType == "int8")
+  else if (fieldTypeStr == "int8")
   {
+    fieldType = Int8;
     fieldValueInt = ((int8_t *)(messageData + messagePosition))[0];
     messagePosition += 1;
   }
   else
   {
-    ROS_ERROR(" Unknown data type: %s", fieldType.c_str());
+    fieldType = UNKNOWN;
+    ROS_ERROR(" Unknown data type: %s", fieldTypeStr.c_str());
     // Finished decoding, as we do not know how large the unknown data blob is
     messageDescriptor.str("");
     return false;
@@ -96,39 +109,33 @@ string const& MessageDecoder::getFieldName()
   return fieldName;
 }
 
-string const& MessageDecoder::getFieldType()
+FieldTypes MessageDecoder::getFieldType()
 {
   return fieldType;
 }
 
 void MessageDecoder::outputField()
 {
-  ROS_INFO("Field %s of type %s", fieldName.c_str(), fieldType.c_str());
-
 // Show field data
-  if (fieldType == "string")
+  if (fieldType == String)
   {
     ROS_INFO(" (string): %s", fieldValueString.c_str());
   }
-  else if (fieldType == "int64")
+  else if (fieldType == Int64)
   {
     ROS_INFO(" (int64_t): %ld", fieldValueInt);
   }
-  else if (fieldType == "int32")
+  else if (fieldType == Int32)
   {
     ROS_INFO(" (int32_t): %d", (int32_t ) fieldValueInt);
   }
-  else if (fieldType == "int16")
+  else if (fieldType == Int16)
   {
     ROS_INFO(" (int16_t): %d", (int16_t ) fieldValueInt);
   }
-  else if (fieldType == "int8")
+  else if (fieldType == Int8)
   {
     ROS_INFO(" (int8_t): %d", (int8_t ) fieldValueInt);
-  }
-  else
-  {
-    ROS_ERROR(" Unknown data type: %s", fieldType.c_str());
   }
 }
 }

@@ -25,6 +25,12 @@
 namespace message_decoder
 {
 
+/** Supported message field types */
+enum FieldTypes
+{
+  String, Int64, Int32, Int16, Int8, UNKNOWN
+};
+
 /**
  * Class to handle decoding ROS topic messages without having prior knowledge about the actual type.
  *
@@ -34,6 +40,8 @@ namespace message_decoder
 class MessageDecoder
 {
 public:
+  MessageDecoder();
+
   /** Start to decode the given message */
   void startDecodingMessage(boost::shared_ptr<topic_tools::ShapeShifter const> const &msg);
 
@@ -50,7 +58,7 @@ public:
   std::string const& getFieldName();
 
   /** @return the type of the current field */
-  std::string const& getFieldType();
+  FieldTypes getFieldType();
 
 private:
 
@@ -63,7 +71,7 @@ private:
   uint8_t messageData[256];
 
   /** Type of current field */
-  std::string fieldType;
+  FieldTypes fieldType;
 
   /** Name of current field */
   std::string fieldName;
