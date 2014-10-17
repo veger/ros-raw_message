@@ -38,8 +38,13 @@ public:
 
 private:
 
-  /** Decode the next field (which is given as function parameter...) */
-  void decodeField(std::string const& field);
+  /**
+   * Decode the next field
+   * @return false if the decoder is finished
+   */
+  bool decodeField();
+
+  std::stringstream messageDescriptor;
 
   /** Position in messageData were the decoder is */
   uint32_t messagePosition;

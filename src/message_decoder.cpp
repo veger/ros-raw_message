@@ -27,31 +27,40 @@ void MessageDecoder::decodeMessage(boost::shared_ptr<topic_tools::ShapeShifter c
 {
   ROS_INFO("Data type: %s, size %u", msg->getDataType().c_str(), msg->size());
 
+  // Put message data into messageData buffer
   messagePosition = 0;
   ros::serialization::OStream stream(messageData, sizeof(messageData));
   msg->write(stream);
 
-  // Parse the message definition
-  // Each message field is on a new line, so read each line separately
-  std::stringstream ss(msg->getMessageDefinition());
-  std::string line;
-  while (std::getline(ss, line, '\n'))
-  {
-    // Each line consists of a field type and name
-    stringstream ss2(line);
-    string fieldType, fieldName;
-    ss2 >> fieldType;
-    ss2 >> fieldName;
+  // Store message definition, so we can iterate over it
+  messageDescriptor.str(msg->getMessageDefinition());
 
-    ROS_INFO("Field %s of type %s", fieldName.c_str(), fieldType.c_str());
-
-    decodeField(fieldType);
-  }
+  // Decode complete message
+  while (decodeField ())
+    ;
 }
 
-void MessageDecoder::decodeField(string const& field)
+bool MessageDecoder::decodeField()
 {
-  if (field == "string")
+  // Parse the message descriptor
+  // Each message field is on a new line, so read next line
+  std::string line;
+  if (std::getline(messageDescriptor, line, '\n') == NULL)
+  {
+    // Finished decoding
+    return false;
+  }
+
+  // Each line consists of a field type and name
+  stringstream ss2(line);
+  string fieldType, fieldName;
+  ss2 >> fieldType;
+  ss2 >> fieldName;
+
+  ROS_INFO("Field %s of type %s", fieldName.c_str(), fieldType.c_str());
+
+  // Show field data
+  if (fieldType == "string")
   {
     // First word is the text length, followed by the text
     uint32_t textLength = ((int32_t *)(messageData + messagePosition))[0];
@@ -60,29 +69,33 @@ void MessageDecoder::decodeField(string const& field)
     ROS_INFO(" (string): %s", text.c_str());
     messagePosition += textLength;
   }
-  else if (field == "int64")
+  else if (fieldType == "int64")
   {
     ROS_INFO(" (int64_t): %ld", ((int64_t * ) (messageData + messagePosition))[0]);
     messagePosition += 8;
   }
-  else if (field == "int32")
+  else if (fieldType == "int32")
   {
     ROS_INFO(" (int32_t): %d", ((int32_t * ) (messageData + messagePosition))[0]);
     messagePosition += 4;
   }
-  else if (field == "int16")
+  else if (fieldType == "int16")
   {
     ROS_INFO(" (int16_t): %d", ((int16_t * ) (messageData + messagePosition))[0]);
     messagePosition += 2;
   }
-  else if (field == "int8")
+  else if (fieldType == "int8")
   {
     ROS_INFO(" (int8_t): %d", ((int8_t * ) (messageData + messagePosition))[0]);
     messagePosition += 1;
   }
   else
   {
-    ROS_ERROR(" Unknown data type: %s", field.c_str());
+    ROS_ERROR(" Unknown data type: %s", fieldType.c_str());
+    // Finished decoding, as we do not know how large the unknown data blob is
+    return false;
   }
+
+  return true;
 }
 }
