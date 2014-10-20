@@ -30,8 +30,6 @@ MessageDecoder::MessageDecoder() :
 
 void MessageDecoder::startDecodingMessage(boost::shared_ptr<topic_tools::ShapeShifter const> const &msg)
 {
-  ROS_INFO("Data type: %s, size %u", msg->getDataType().c_str(), msg->size());
-
   // Put message data into messageData buffer
   messagePosition = 0;
   ros::serialization::OStream stream(messageData, sizeof(messageData));
