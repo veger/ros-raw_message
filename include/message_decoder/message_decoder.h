@@ -60,6 +60,50 @@ public:
   /** @return the type of the current field */
   FieldTypes getFieldType();
 
+  /**
+   * Obtains the string value of the current field. If the function returns false the current
+   * field type was not a string and value is not updated.
+   *
+   * @param value to copy the string into (only if the function returns true)
+   * @return true if the current field contains a string value
+   */
+  bool getFieldString(std::string& value);
+
+  /**
+   * Obtains the Int64 value of the current field. If the function returns false the current
+   * field type was not a string and value is not updated.
+   *
+   * @param value to copy the string into (only if the function returns true)
+   * @return true if the current field contains an Int64 value
+   */
+  bool getFieldInt64(int64_t& value);
+
+  /**
+   * Obtains the Int64 value of the current field. If the function returns false the current
+   * field type was not a string and value is not updated.
+   *
+   * @param value to copy the string into (only if the function returns true)
+   * @return true if the current field contains an Int32 value
+   */
+  bool getFieldInt32(int32_t& value);
+
+  /**
+   * Obtains the Int64 value of the current field. If the function returns false the current
+   * field type was not a string and value is not updated.
+   *
+   * @param value to copy the string into (only if the function returns true)
+   * @return true if the current field contains an Int16 value
+   */
+  bool getFieldInt16(int16_t& value);
+
+  /**
+   * Obtains the Int64 value of the current field. If the function returns false the current
+   * field type was not a string and value is not updated.
+   *
+   * @param value to copy the string into (only if the function returns true)
+   * @return true if the current field contains an Int8 value
+   */
+  bool getFieldInt8(int8_t& value);
 private:
 
   std::stringstream messageDescriptor;

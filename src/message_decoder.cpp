@@ -114,6 +114,56 @@ FieldTypes MessageDecoder::getFieldType()
   return fieldType;
 }
 
+bool MessageDecoder::getFieldString(string& value)
+{
+  if (fieldType == String)
+  {
+    value = fieldValueString;
+    return true;
+  }
+  return false;
+}
+
+bool MessageDecoder::getFieldInt64(int64_t& value)
+{
+  if (fieldType == Int64)
+  {
+    value = fieldValueInt;
+    return true;
+  }
+  return false;
+}
+
+bool MessageDecoder::getFieldInt32(int32_t& value)
+{
+  if (fieldType == Int32)
+  {
+    value = (int32_t)fieldValueInt;
+    return true;
+  }
+  return false;
+}
+
+bool MessageDecoder::getFieldInt16(int16_t& value)
+{
+  if (fieldType == Int16)
+  {
+    value = (int16_t)fieldValueInt;
+    return true;
+  }
+  return false;
+}
+
+bool MessageDecoder::getFieldInt8(int8_t& value)
+{
+  if (fieldType == Int8)
+  {
+    value = (int8_t)fieldValueInt;
+    return true;
+  }
+  return false;
+}
+
 void MessageDecoder::outputField()
 {
 // Show field data
