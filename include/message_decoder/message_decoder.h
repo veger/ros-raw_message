@@ -104,6 +104,9 @@ public:
    * @return true if the current field contains an Int8 value
    */
   bool getFieldInt8(int8_t& value);
+
+  /** Reset the decoder, i.e. decoder behaves as if {@link startDecodingMessage()} just got called. */
+  void resetDecoder();
 private:
 
   std::stringstream messageDescriptor;

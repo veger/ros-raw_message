@@ -164,6 +164,14 @@ bool MessageDecoder::getFieldInt8(int8_t& value)
   return false;
 }
 
+void MessageDecoder::resetDecoder()
+{
+  messageDescriptor.clear();
+  messageDescriptor.seekg(0, ios::beg);
+  messagePosition = 0;
+  fieldType = UNKNOWN;
+}
+
 void MessageDecoder::outputField()
 {
 // Show field data
