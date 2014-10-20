@@ -42,6 +42,26 @@ void MessageDecoder::startDecodingMessage(boost::shared_ptr<topic_tools::ShapeSh
   messageDescriptor.str(msg->getMessageDefinition());
 }
 
+bool MessageDecoder::findField(string const& searchFieldName, bool fromBegin)
+{
+  if (fromBegin)
+  {
+    resetDecoder();
+  }
+
+  // Iterate over fields until the requested one is found
+  while (MessageDecoder::decodeNextField())
+  {
+    if (fieldName == searchFieldName)
+    {
+      // Found field
+      return true;
+    }
+  }
+
+  return false;
+}
+
 bool MessageDecoder::decodeNextField()
 {
   // Parse the message descriptor

@@ -45,6 +45,14 @@ public:
   /** Start to decode the given message */
   void startDecodingMessage(boost::shared_ptr<topic_tools::ShapeShifter const> const &msg);
 
+  /** Search message for given field. Note that a message needs to be given using {@link #startDecodingMessage()}.
+   *
+   * @param searchFieldName name of the field to look for
+   * @param fromBegin reset decoder to look from start
+   * @return true if the field is found, false otherwise
+   */
+  bool findField(std::string const& searchFieldName, bool fromBegin = false);
+
   /**
    * Decode the next field
    * @return false if the decoder is finished
