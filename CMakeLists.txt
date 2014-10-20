@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(message_decoder)
+project(raw_message)
 
 ## Find catkin macros and libraries
 find_package(catkin REQUIRED COMPONENTS
@@ -13,7 +13,7 @@ find_package(catkin REQUIRED COMPONENTS
 
 catkin_package(
   INCLUDE_DIRS include
-  LIBRARIES message_decoder
+  LIBRARIES raw_message
   CATKIN_DEPENDS topic_tools
 )
 
@@ -28,9 +28,9 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 
-## Declare the message_decoder library
-add_library(message_decoder src/message_decoder.cpp)
-target_link_libraries(message_decoder ${catkin_LIBRARIES})
+## Declare the raw_message library
+add_library(raw_message src/message_decoder.cpp)
+target_link_libraries(raw_message ${catkin_LIBRARIES})
 
 #############
 ## Install ##
@@ -40,7 +40,7 @@ target_link_libraries(message_decoder ${catkin_LIBRARIES})
 # See http://ros.org/doc/api/catkin/html/adv_user_guide/variables.html
 
 ## Mark executables and/or libraries for installation
-install(TARGETS message_decoder
+install(TARGETS raw_message
   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   RUNTIME DESTINATION ${CATKIN_GLOBAL_BIN_DESTINATION}

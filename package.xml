@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <package>
-  <name>message_decoder</name>
+  <name>raw_message</name>
   <version>0.0.0</version>
   <description>Library for decoding messages from any ROS topic without requiring any prior knowledge of that topic.</description>
 

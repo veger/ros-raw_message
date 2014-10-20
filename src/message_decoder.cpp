@@ -16,17 +16,16 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with TERRA. If not, see <http://www.gnu.org/licenses/>.
  */
-#include "message_decoder/message_decoder.h"
+#include "raw_message/message_decoder.h"
 
 using namespace std;
 
-namespace message_decoder
+namespace raw_message
 {
 
 MessageDecoder::MessageDecoder() :
     fieldType(UNKNOWN), fieldValueInt(0), messagePosition(0)
 {
-
 }
 
 void MessageDecoder::startDecodingMessage(boost::shared_ptr<topic_tools::ShapeShifter const> const &msg)

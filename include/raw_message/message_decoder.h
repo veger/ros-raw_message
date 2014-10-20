@@ -22,7 +22,7 @@
 
 #include "topic_tools/shape_shifter.h"
 
-namespace message_decoder
+namespace raw_message
 {
 
 /** Supported message field types */
