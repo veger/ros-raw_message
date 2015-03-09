@@ -7,6 +7,8 @@ The raw_message library makes use of the [ShapeShifter](http://docs.ros.org/indi
 The library has a MessageDecoder class that is able to decode the raw, binary blob that is received the topic and provide information about the available fields and their values.
 Basically, it makes this (undocumented) API more and generically accessible.
 
-
 ## Limitation
 Currently, it is only possible to read from arbitrary topics, writing to them is not *(yet)* supported.
+
+## License
+The ROS raw_message library licenced under [GNU GPLv3](LICENSE).
