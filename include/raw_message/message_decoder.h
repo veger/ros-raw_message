@@ -21,15 +21,10 @@
 #include <string>
 
 #include "topic_tools/shape_shifter.h"
+#include "raw_message/raw_message.h"
 
 namespace raw_message
 {
-
-/** Supported message field types */
-enum FieldTypes
-{
-  String, Int64, Int32, Int16, Int8, UNKNOWN
-};
 
 /**
  * Class to handle decoding ROS topic messages without having prior knowledge about the actual type.
