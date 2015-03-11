@@ -16,16 +16,20 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with TERRA. If not, see <http://www.gnu.org/licenses/>.
  */
-#pragma once
+#include"raw_message/raw_message.h"
 
 namespace raw_message
 {
-  /** Supported raw_message field types */
-  enum FieldTypes
+  const char* toString(FieldTypes type)
   {
-    String, Int64, Int32, Int16, Int8, UNKNOWN
-  };
-
-  /** Convert the FieldTypes enum value into a string */
-  const char* toString(FieldTypes type);
+    switch(type)
+    {
+      case String: return "String";
+      case Int64: return "Int64";
+      case Int32: return "Int32";
+      case Int16: return "Int16";
+      case Int8: return "Int8";
+    }
+    return "UNKNOWN";
+  }
 }

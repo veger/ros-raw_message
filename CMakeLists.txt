@@ -29,7 +29,7 @@ include_directories(
 )
 
 ## Declare the raw_message library
-add_library(raw_message src/message_decoder.cpp)
+add_library(raw_message src/raw_message.cpp src/message_decoder.cpp)
 target_link_libraries(raw_message ${catkin_LIBRARIES})
 
 #############
