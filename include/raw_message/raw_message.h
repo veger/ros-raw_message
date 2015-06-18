@@ -23,7 +23,7 @@ namespace raw_message
   /** Supported raw_message field types */
   enum FieldTypes
   {
-    String, Int64, Int32, Int16, Int8, UNKNOWN
+    String, Int64, Int32, Int16, Int8, Bool, UNKNOWN
   };
 
   /** Convert the FieldTypes enum value into a string */

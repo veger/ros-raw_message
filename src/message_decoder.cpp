@@ -1,5 +1,5 @@
 /**
- * (C) Copyright 2014 Robotics and Mechatronics, University of Twente
+ * (C) Copyright 2014-2015 Robotics and Mechatronics, University of Twente
  *
  * This file is part of the message_decoder library
  *
@@ -109,6 +109,12 @@ bool MessageDecoder::decodeNextField()
     fieldValueInt = ((int8_t *)(messageData + messagePosition))[0];
     messagePosition += 1;
   }
+  else if (fieldTypeStr == "bool")
+  {
+    fieldType = Bool;
+    fieldValueInt = ((bool *)(messageData + messagePosition))[0];
+    messagePosition += 1;
+  }
   else
   {
     fieldType = UNKNOWN;
@@ -176,6 +182,16 @@ bool MessageDecoder::getFieldInt8(int8_t& value)
   if (fieldType == Int8)
   {
     value = (int8_t)fieldValueInt;
+    return true;
+  }
+  return false;
+}
+
+bool MessageDecoder::getFieldBool(bool& value)
+{
+  if (fieldType == Bool)
+  {
+    value = (bool)fieldValueInt;
     return true;
   }
   return false;

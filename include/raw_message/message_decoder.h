@@ -1,5 +1,5 @@
 /**
- * (C) Copyright 2014 Robotics and Mechatronics, University of Twente
+ * (C) Copyright 2014-2015 Robotics and Mechatronics, University of Twente
  *
  * This file is part of the message_decoder library
  *
@@ -82,7 +82,7 @@ public:
   bool getFieldInt64(int64_t& value);
 
   /**
-   * Obtains the Int64 value of the current field. If the function returns false the current
+   * Obtains the Int32 value of the current field. If the function returns false the current
    * field type was not a string and value is not updated.
    *
    * @param value to copy the string into (only if the function returns true)
@@ -91,7 +91,7 @@ public:
   bool getFieldInt32(int32_t& value);
 
   /**
-   * Obtains the Int64 value of the current field. If the function returns false the current
+   * Obtains the Int16 value of the current field. If the function returns false the current
    * field type was not a string and value is not updated.
    *
    * @param value to copy the string into (only if the function returns true)
@@ -100,13 +100,22 @@ public:
   bool getFieldInt16(int16_t& value);
 
   /**
-   * Obtains the Int64 value of the current field. If the function returns false the current
+   * Obtains the Int8 value of the current field. If the function returns false the current
    * field type was not a string and value is not updated.
    *
    * @param value to copy the string into (only if the function returns true)
    * @return true if the current field contains an Int8 value
    */
   bool getFieldInt8(int8_t& value);
+
+  /**
+   * Obtains the Bool value of the current field. If the function returns false the current
+   * field type was not a string and value is not updated.
+   *
+   * @param value to copy the string into (only if the function returns true)
+   * @return true if the current field contains an Int8 value
+   */
+  bool getFieldBool(bool& value);
 
   /** Reset the decoder, i.e. decoder behaves as if {@link startDecodingMessage()} just got called. */
   void resetDecoder();
